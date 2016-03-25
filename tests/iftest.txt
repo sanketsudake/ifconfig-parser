@@ -1,0 +1,162 @@
+br0       Link encap:Ethernet  HWaddr FF:FF:55:10:8D:38  
+          inet addr:100.100.124.243  Bcast:10.209.127.255  Mask:255.255.252.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:17660899 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:769302 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:1573428290 (1.4 GiB)  TX bytes:288811825 (275.4 MiB)
+
+eth0      Link encap:Ethernet  HWaddr FF:FF:FF:10:8D:38  
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:19973416 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:861593 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:2095293552 (1.9 GiB)  TX bytes:298648577 (284.8 MiB)
+          Interrupt:35 
+
+eth1      Link encap:Ethernet  HWaddr FF:FF:FF:10:8D:39  
+          BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+          Interrupt:38 
+
+eth2      Link encap:Ethernet  HWaddr FF:FF:FF:10:8D:3A  
+          BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+          Interrupt:34 
+
+eth3      Link encap:Ethernet  HWaddr FF:FF:FF:10:8D:3B  
+          BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+          Interrupt:36 
+
+eth4      Link encap:Ethernet  HWaddr FF:FF:FF:F6:37:C4  
+          BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+          Interrupt:50 
+
+eth5      Link encap:Ethernet  HWaddr FF:FF:FF:F6:37:C5  
+          BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+          Interrupt:53 
+
+eth6      Link encap:Ethernet  HWaddr FF:FF:FF:F6:37:C6  
+          BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+          Interrupt:50 
+
+eth7      Link encap:Ethernet  HWaddr FF:FF:FF:F6:37:C7  
+          BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+          Interrupt:53 
+
+Ifconfig uses the ioctl access method to get the full address information, which limits hardware addresses to 8 bytes.
+Because Infiniband address has 20 bytes, only the first 8 bytes are displayed correctly.
+Ifconfig is obsolete! For replacement check ip.
+ib0       Link encap:InfiniBand  HWaddr FF:00:00:48:FE:80:00:00:00:00:00:00:00:00:00:00:00:00:00:00  
+          inet addr:100.100.90.1  Bcast:100.100.90.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:2044  Metric:1
+          RX packets:435382 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:396281 errors:0 dropped:2 overruns:0 carrier:0
+          collisions:0 txqueuelen:256 
+          RX bytes:144203940 (137.5 MiB)  TX bytes:80757429 (77.0 MiB)
+
+Ifconfig uses the ioctl access method to get the full address information, which limits hardware addresses to 8 bytes.
+Because Infiniband address has 20 bytes, only the first 8 bytes are displayed correctly.
+Ifconfig is obsolete! For replacement check ip.
+ib1       Link encap:InfiniBand  HWaddr FF:00:00:FF:FF:80:00:00:00:00:00:00:00:00:00:00:00:00:00:00  
+          BROADCAST MULTICAST  MTU:4092  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:256 
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+
+Ifconfig uses the ioctl access method to get the full address information, which limits hardware addresses to 8 bytes.
+Because Infiniband address has 20 bytes, only the first 8 bytes are displayed correctly.
+Ifconfig is obsolete! For replacement check ip.
+ib2       Link encap:InfiniBand  HWaddr FF:00:00:FF:FE:80:00:00:00:00:00:00:00:00:00:00:00:00:00:00  
+          inet addr:100.100.92.1  Bcast:100.100.92.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:2044  Metric:1
+          RX packets:435030 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:395648 errors:0 dropped:2 overruns:0 carrier:0
+          collisions:0 txqueuelen:256 
+          RX bytes:144371240 (137.6 MiB)  TX bytes:80643547 (76.9 MiB)
+
+Ifconfig uses the ioctl access method to get the full address information, which limits hardware addresses to 8 bytes.
+Because Infiniband address has 20 bytes, only the first 8 bytes are displayed correctly.
+Ifconfig is obsolete! For replacement check ip.
+ib3       Link encap:InfiniBand  HWaddr FF:00:00:49:FE:80:00:00:00:00:00:00:00:00:00:00:00:00:00:00  
+          BROADCAST MULTICAST  MTU:4092  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:256 
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:181481 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:181481 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:33222552 (31.6 MiB)  TX bytes:33222552 (31.6 MiB)
+
+p1p1      Link encap:Ethernet  HWaddr FF:FF:FF:0B:27:88  
+          UP BROADCAST RUNNING MULTICAST  MTU:9000  Metric:1
+          RX packets:32550249 errors:0 dropped:4436 overruns:0 frame:0
+          TX packets:36079885 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:217338209747 (202.4 GiB)  TX bytes:291983884271 (271.9 GiB)
+
+p1p2      Link encap:Ethernet  HWaddr FF:FF:FF:0B:27:8A  
+          UP BROADCAST RUNNING MULTICAST  MTU:9000  Metric:1
+          RX packets:32550982 errors:0 dropped:3788 overruns:0 frame:0
+          TX packets:36072304 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:217752825949 (202.7 GiB)  TX bytes:291978219741 (271.9 GiB)
+
+vcsbr     Link encap:Ethernet  HWaddr FF:FF:FF:72:AA:AF  
+          inet addr:100.100.1.1  Bcast:100.100.255.255  Mask:255.255.0.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:18 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:0 (0.0 b)  TX bytes:2717 (2.6 KiB)
+
+virbr0    Link encap:Ethernet  HWaddr 52:54:00:04:82:FA  
+          inet addr:100.100.100.1  Bcast:100.100.122.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:11 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:0 (0.0 b)  TX bytes:2574 (2.5 KiB)
+
+virbr0-nic Link encap:Ethernet  HWaddr 52:54:00:04:82:FA  
+          BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:500 
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+
+
+
+
