@@ -1,5 +1,6 @@
-from re_scan import Scanner, ScanEnd
 from itertools import izip
+
+from re_scan import ScanEnd, Scanner
 
 
 class Interface(object):
