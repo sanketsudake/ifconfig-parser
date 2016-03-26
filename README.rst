@@ -10,7 +10,7 @@ Install ifconfig-parser:
 
 .. code-block:: bash
 
-    pip install ifparser
+    pip install -U ifparser
 
 You can access inferface information as below :
 
