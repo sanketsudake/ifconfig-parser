@@ -49,7 +49,7 @@ setup(
     url='http://github.com/tripples/ifconfig-parser',
     download_url='http://github.com/tripples/ifconfig-parser',
     license='BSD',
-    description='Parse ifconfig output and retrieve values',
+    description='Parse ifconfig output and retrieve values with goodies',
     long_description=long_description,
     author='Sanket Sudake',
     author_email='sanketsudake@gmail.com',
