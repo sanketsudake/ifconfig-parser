@@ -31,6 +31,12 @@ class Interface(object):
                 "Invalid attribute mentioned name=%s value=%s" %
                 (name, value))
 
+    def __str__(self):
+        return "%s-%s" % ("obj", self.interface)
+
+    def __repr__(self):
+        return self.__str__()
+
     def get_values(self):
         value_dict = {}
         for attr in Interface._attrs:
@@ -135,3 +141,19 @@ class Ifcfg(object):
 
     def get_interface(self, interface):
         return self._interfaces[interface]
+
+    def get(self, **kwargs):
+        for key in kwargs.keys():
+            key_check = key in Interface._attrs or key in Interface._flags
+            if not key_check:
+                raise ValueError("Invalid argument: %s" % key)
+        eligible = []
+        for name, interface in self._interfaces.iteritems():
+            inc_check = True
+            for key in kwargs.keys():
+                if not inc_check:
+                    continue
+                inc_check = getattr(interface, key) == kwargs[key]
+            if inc_check:
+                eligible.append(interface)
+        return eligible

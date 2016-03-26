@@ -72,3 +72,14 @@ class IfcfgTestCase3(unittest.TestCase):
         _ifparser = self.ifparser
         self.assertEqual(len(_ifparser.interfaces), 3)
         self.assertEqual(_ifparser.interfaces, ['lo', 'docker0', 'eth0'])
+
+    def test_get(self):
+        _ifparser = self.ifparser
+        self.assertEqual(
+            [_ifparser.get(interface='lo')[0],
+             _ifparser.get(interface='docker0')[0],
+             _ifparser.get(interface='eth0')[0]],
+            _ifparser.get(UP=True))
+        self.assertEqual(
+            _ifparser.get(interface='eth0'),
+            _ifparser.get(hwaddr='08:00:27:1f:d8:b0'))

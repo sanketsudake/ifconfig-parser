@@ -1,7 +1,7 @@
 ifconfig-parser
 ################
 
-Parse ifconfig output collected from local or remote server and retrive required
+Parse ifconfig output collected from local or remote server and retrieve required
 interface information.
 
 Usage
@@ -24,9 +24,25 @@ You can access inferface information as below :
     >>> eth0 = ifdata.get_interface('eth0')
     >>> eth0.BROADCAST
     True
-    >> eth0.hwaddr, eth0.mtu, eth0.ip, eth0.UP
+    >>> eth0.hwaddr, eth0.mtu, eth0.ip, eth0.UP
     ('08:00:27:1f:d8:b0', '1500', '10.0.2.15', True)
-    >> eth0.get_values()
+
+
+You can query for intefaces on particular parameter :
+
+.. code-block:: python
+
+    >>> ifdata.get(itype='Ethernet')
+    [obj-docker0, obj-eth0]
+    >>> ifdata.get(UP=True)
+   [obj-lo, obj-docker0, obj-eth0]
+
+Get all interface parameters with ``get_values``. Following dictionary contains all possible values:
+
+.. code-block:: python
+
+    >>> eth0 = ifdata.get_interface('eth0')
+    >>> eth0.get_values()
     {'BROADCAST': True,
      'LOOPBACK': False,
      'MULTICAST': True,
@@ -43,3 +59,12 @@ You can access inferface information as below :
      'rxpkts': '628',
      'txbytes': '50826',
      'txpkts': '424'}
+
+List of parameters for interface:
+
+- BROADCAST, LOOPBACK, MULTICAST, RUNNING, UP
+- interface - Interface name, itype - Interface Type
+- ip - IP, bcast - Broadcast, mask - Mask
+- hwaddr - MAC address, mtu - MTU
+- rxbytes - Received Bytes, rxpkts - Received Packets
+- txbytes - Sent Bytes, txpkts - Sent Packets
