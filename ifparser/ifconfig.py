@@ -65,9 +65,9 @@ class Ifcfg(object):
          ('process_any', r"\s+RX packets[:\s](?P<rxpkts>\d+).*"),
          ('process_any', r"\s+TX packets[:\s](?P<txpkts>\d+).*"),
          ('process_interface2',
-          r"(?P<interface>^[a-zA-Z0-9:-]+).*?<(?P<states>[A-Z,]+\s*)>"
+          r"(?P<interface>^[a-zA-Z0-9-]+).*?<(?P<states>[A-Z,]+\s*)>"
           ".*?mtu (?P<mtu>[0-9]+).*"),
-         ('process_ignore', r"(Ifconfig|Because)\s.*"),
+         ('process_ignore', r"(Ifconfig|Infiniband|Because)\s.*"),
          ('process_ignore', r"\s+.*"), ])
 
     def __init__(self, raw_text, debug=False):
@@ -98,7 +98,7 @@ class Ifcfg(object):
         self.set_curr_interface_attr(groupdict)
 
     def process_interface2(self, group, groupdict, matched_str):
-        self.curr_interface = groupdict.pop('interface')
+        self.curr_interface = groupdict['interface']
         self._interfaces[self.curr_interface] = Interface()
         states = groupdict.pop('states').strip().split(',')
         for st in states:
