@@ -7,7 +7,7 @@ class Interface(object):
     _attrs = frozenset(['interface', 'itype', 'mtu',
                         'ip', 'bcast', 'mask', 'hwaddr',
                         'txbytes', 'rxbytes', 'rxpkts', 'txpkts'])
-    _flags = frozenset(['BROADCAST', 'MULTICAST', 'UP', 'RUNNING', 'LOOPBACK'])
+    _flags = frozenset(['BROADCAST', 'MULTICAST', 'UP', 'RUNNING', 'LOOPBACK', 'DYNAMIC'])
 
     def __init__(self, **kwargs):
         for k, v in kwargs.iteritems():

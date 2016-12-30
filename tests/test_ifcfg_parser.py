@@ -4,7 +4,6 @@ from ifparser import Ifcfg, Interface
 
 
 class IfcfgTestCase(unittest.TestCase):
-
     def setUp(self):
         fp = open('tests/iftest.txt', 'r')
         data = fp.read()
@@ -48,7 +47,6 @@ class IfcfgTestCase(unittest.TestCase):
 
 
 class IfcfgTestCase2(unittest.TestCase):
-
     def setUp(self):
         fp = open('tests/iftest_2.txt', 'r')
         data = fp.read()
@@ -61,7 +59,6 @@ class IfcfgTestCase2(unittest.TestCase):
 
 
 class IfcfgTestCase3(unittest.TestCase):
-
     def setUp(self):
         fp = open('tests/iftest_3.txt', 'r')
         data = fp.read()
@@ -76,10 +73,25 @@ class IfcfgTestCase3(unittest.TestCase):
     def test_get(self):
         _ifparser = self.ifparser
         self.assertEqual(
-            [_ifparser.get(interface='lo')[0],
-             _ifparser.get(interface='docker0')[0],
-             _ifparser.get(interface='eth0')[0]],
+            [
+                _ifparser.get(interface='lo')[0],
+                _ifparser.get(interface='docker0')[0],
+                _ifparser.get(interface='eth0')[0]
+            ],
             _ifparser.get(UP=True))
         self.assertEqual(
             _ifparser.get(interface='eth0'),
             _ifparser.get(hwaddr='08:00:27:1f:d8:b0'))
+
+
+class IfcfgTestCaseDynamic(unittest.TestCase):
+    def setUp(self):
+        fp = open('tests/iftest_4.txt', 'r')
+        data = fp.read()
+        fp.close()
+        self.ifparser = Ifcfg(data, debug=True)
+
+    def test_interfaces(self):
+        _ifparser = self.ifparser
+        self.assertEqual(len(_ifparser.interfaces), 3)
+        self.assertEqual(_ifparser.interfaces, ['lo', 'wlan0', 'eth0'])
