@@ -1,16 +1,17 @@
-from itertools import izip
-
-from re_scan import ScanEnd, Scanner
+from __future__ import unicode_literals, print_function
+from .re_scan import ScanEnd, Scanner
 
 
 class Interface(object):
-    _attrs = frozenset(['interface', 'itype', 'mtu',
-                        'ip', 'bcast', 'mask', 'hwaddr',
-                        'txbytes', 'rxbytes', 'rxpkts', 'txpkts'])
-    _flags = frozenset(['BROADCAST', 'MULTICAST', 'UP', 'RUNNING', 'LOOPBACK', 'DYNAMIC'])
+    _attrs = frozenset([
+        'interface', 'itype', 'mtu', 'ip', 'bcast', 'mask', 'hwaddr',
+        'txbytes', 'rxbytes', 'rxpkts', 'txpkts'
+    ])
+    _flags = frozenset(
+        ['BROADCAST', 'MULTICAST', 'UP', 'RUNNING', 'LOOPBACK', 'DYNAMIC'])
 
     def __init__(self, **kwargs):
-        for k, v in kwargs.iteritems():
+        for k, v in kwargs.items():
             setattr(self, k, v)
 
     def __getattr__(self, name):
@@ -27,9 +28,8 @@ class Interface(object):
             if value:
                 super(Interface, self).__setattr__(name, value)
         else:
-            raise ValueError(
-                "Invalid attribute mentioned name=%s value=%s" %
-                (name, value))
+            raise ValueError("Invalid attribute mentioned name=%s value=%s" %
+                             (name, value))
 
     def __str__(self):
         return "%s-%s" % ("obj", self.interface)
@@ -51,24 +51,23 @@ class ParseError(Exception):
 
 
 class Ifcfg(object):
-    scanner = Scanner(
-        [('process_interface',
-          r"(?P<interface>^[a-zA-Z0-9:-]+)\s+"
-          "Link encap\:(?P<itype>[A-Za-z]+)\s+"
-          "((?:Loopback)|(?:HWaddr\s(?P<hwaddr>[0-9A-Fa-f:]+))).*"),
-         ('process_any', r"\s+ether\s(?P<hwaddr>[0-9A-Fa-f:]+).*"),
-         ('process_ip', r"\s+inet[\s:].*"),
-         ('process_mtu', r"\s+(?P<states>[A-Z\s]+\s*)+MTU:(?P<mtu>[0-9]+).*"),
-         ('process_any',
-          r"\s+RX bytes:(?P<rxbytes>\d+).*?"
-          "TX bytes:(?P<txbytes>\d+).*"),
-         ('process_any', r"\s+RX packets[:\s](?P<rxpkts>\d+).*"),
-         ('process_any', r"\s+TX packets[:\s](?P<txpkts>\d+).*"),
-         ('process_interface2',
-          r"(?P<interface>^[a-zA-Z0-9-]+).*?<(?P<states>[A-Z,]+\s*)>"
-          ".*?mtu (?P<mtu>[0-9]+).*"),
-         ('process_ignore', r"(Ifconfig|Infiniband|Because)\s.*"),
-         ('process_ignore', r"\s+.*"), ])
+    scanner = Scanner([
+        ('process_interface', r"(?P<interface>^[a-zA-Z0-9:-]+)\s+"
+         "Link encap\:(?P<itype>[A-Za-z]+)\s+"
+         "((?:Loopback)|(?:HWaddr\s(?P<hwaddr>[0-9A-Fa-f:]+))).*"),
+        ('process_any', r"\s+ether\s(?P<hwaddr>[0-9A-Fa-f:]+).*"),
+        ('process_ip', r"\s+inet[\s:].*"),
+        ('process_mtu', r"\s+(?P<states>[A-Z\s]+\s*)+MTU:(?P<mtu>[0-9]+).*"),
+        ('process_any', r"\s+RX bytes:(?P<rxbytes>\d+).*?"
+         "TX bytes:(?P<txbytes>\d+).*"),
+        ('process_any', r"\s+RX packets[:\s](?P<rxpkts>\d+).*"),
+        ('process_any', r"\s+TX packets[:\s](?P<txpkts>\d+).*"),
+        ('process_interface2',
+         r"(?P<interface>^[a-zA-Z0-9-]+).*?<(?P<states>[A-Z,]+\s*)>"
+         ".*?mtu (?P<mtu>[0-9]+).*"),
+        ('process_ignore', r"(Ifconfig|Infiniband|Because)\s.*"),
+        ('process_ignore', r"\s+.*"),
+    ])
 
     def __init__(self, raw_text, debug=False):
         self.debug = debug
@@ -81,15 +80,13 @@ class Ifcfg(object):
             try:
                 for token, match in Ifcfg.scanner.scan(line):
                     process_func = getattr(self, token)
-                    process_func(
-                        match.groups(),
-                        match.groupdict(),
-                        match.group())
+                    process_func(match.groups(),
+                                 match.groupdict(), match.group())
             except ScanEnd:
                 raise ParseError(repr(line))
 
     def set_curr_interface_attr(self, kwargs):
-        for k, v in kwargs.iteritems():
+        for k, v in kwargs.items():
             setattr(self._interfaces[self.curr_interface], k, v)
 
     def process_interface(self, group, groupdict, matched_str):
@@ -107,18 +104,14 @@ class Ifcfg(object):
 
     def process_ip(self, group, groupdict, matched_str):
         if ':' in matched_str:
-            for attr in matched_str.strip().lower().replace(
-                    'inet addr', 'ip').split():
+            for attr in matched_str.strip().lower().replace('inet addr',
+                                                            'ip').split():
                 name, value = attr.split(':')
                 setattr(self._interfaces[self.curr_interface], name, value)
         else:
-            map_dict = {
-                'inet': 'ip',
-                'netmask': 'mask',
-                'broadcast': 'bcast'
-            }
+            map_dict = {'inet': 'ip', 'netmask': 'mask', 'broadcast': 'bcast'}
             kv = iter(matched_str.split())
-            for k, v in izip(kv, kv):
+            for k, v in zip(kv, kv):
                 groupdict[map_dict[k]] = v
             self.set_curr_interface_attr(groupdict)
 
@@ -133,7 +126,7 @@ class Ifcfg(object):
 
     def process_ignore(self, group, groupdict, matched_str):
         if self.debug:
-            print group, groupdict, matched_str
+            print("{0} {1} {2}".format(group, groupdict, matched_str))
 
     @property
     def interfaces(self):
@@ -148,7 +141,7 @@ class Ifcfg(object):
             if not key_check:
                 raise ValueError("Invalid argument: %s" % key)
         eligible = []
-        for name, interface in self._interfaces.iteritems():
+        for name, interface in self._interfaces.items():
             inc_check = True
             for key in kwargs.keys():
                 if not inc_check:

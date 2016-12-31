@@ -31,14 +31,13 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
-
+from __future__ import unicode_literals, print_function
 from sre_compile import compile as sre_compile
 from sre_constants import BRANCH, SUBPATTERN
 from sre_parse import Pattern, SubPattern, parse
 
 
 class _ScanMatch(object):
-
     def __init__(self, match, rule, start, end):
         self._match = match
         self._start = start
@@ -60,16 +59,15 @@ class _ScanMatch(object):
 
     def group(self, *groups):
         if len(groups) in (0, 1):
-            return self.__group_proc(
-                self._match.group,
-                groups and groups[0] or 0)
-        return tuple(self.__group_proc(self._match.group, group)
-                     for group in groups)
+            return self.__group_proc(self._match.group, groups and groups[0] or
+                                     0)
+        return tuple(
+            self.__group_proc(self._match.group, group) for group in groups)
 
     def groupdict(self, default=None):
         prefix = self._rule + '\x00'
         rv = {}
-        for key, value in self._match.groupdict(default).iteritems():
+        for key, value in self._match.groupdict(default).items():
             if key.startswith(prefix):
                 rv[key[len(prefix):]] = value
         return rv
@@ -91,19 +89,16 @@ class _ScanMatch(object):
 
 
 class ScanEnd(Exception):
-
     def __init__(self, pos):
         Exception.__init__(self, pos)
         self.pos = pos
 
 
 class Scanner(object):
-
     def __init__(self, rules, flags=0):
         pattern = Pattern()
         pattern.flags = flags
         pattern.groups = len(rules) + 1
-
         _og = pattern.opengroup
         pattern.opengroup = lambda n: _og(n and '%s\x00%s' % (name, n) or n)
 
@@ -111,13 +106,12 @@ class Scanner(object):
         subpatterns = []
         for group, (name, regex) in enumerate(rules, 1):
             last_group = pattern.groups - 1
-            subpatterns.append(SubPattern(pattern, [
-                (SUBPATTERN, (group, parse(regex, flags, pattern))),
-            ]))
+            subpatterns.append(
+                SubPattern(pattern, [(SUBPATTERN, (group, parse(regex, flags,
+                                                                pattern))), ]))
             self.rules.append((name, last_group, pattern.groups - 1))
-
-        self._scanner = sre_compile(SubPattern(
-            pattern, [(BRANCH, (None, subpatterns))])).scanner
+        self._scanner = sre_compile(
+            SubPattern(pattern, [(BRANCH, (None, subpatterns))])).scanner
 
     def scan(self, string, skip=False):
         sc = self._scanner(string)
