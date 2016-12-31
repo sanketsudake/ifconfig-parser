@@ -18,9 +18,10 @@ def get_packages(package):
     """
     Return root package and all sub-packages.
     """
-    return [dirpath
-            for dirpath, dirnames, filenames in os.walk(package)
-            if os.path.exists(os.path.join(dirpath, '__init__.py'))]
+    return [
+        dirpath for dirpath, dirnames, filenames in os.walk(package)
+        if os.path.exists(os.path.join(dirpath, '__init__.py'))
+    ]
 
 
 def get_package_data(package):
@@ -34,9 +35,10 @@ def get_package_data(package):
 
     filepaths = []
     for base, filenames in walk:
-        filepaths.extend([os.path.join(base, filename)
-                          for filename in filenames])
+        filepaths.extend(
+            [os.path.join(base, filename) for filename in filenames])
     return {package: filepaths}
+
 
 version = get_version('ifparser')
 
@@ -56,12 +58,13 @@ setup(
     packages=get_packages('ifparser'),
     package_data=get_package_data('ifparser'),
     classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "License :: OSI Approved :: BSD License",
-        "Programming Language :: Python",
+        "Programming Language :: Python :: 2.7",
         "Operating System :: POSIX :: Linux",
         "Topic :: Internet",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Intended Audience :: Developers",
-    ],
-)
+        "Intended Audience :: System Administrators",
+        "Topic :: Software Development :: Libraries"
+    ], )
