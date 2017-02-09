@@ -50,6 +50,10 @@ class ParseError(Exception):
     pass
 
 
+class InterfaceNotFound(Exception):
+    pass
+
+
 class Ifcfg(object):
     scanner = Scanner([
         ('process_interface', r"(?P<interface>^[a-zA-Z0-9:-]+)\s+"
@@ -133,7 +137,10 @@ class Ifcfg(object):
         return sorted(self._interfaces.keys())
 
     def get_interface(self, interface):
-        return self._interfaces[interface]
+        if interface in self._interfaces:
+            return self._interfaces[interface]
+        raise InterfaceNotFound("No such interface {0} found.".format(
+            interface))
 
     def get(self, **kwargs):
         for key in kwargs.keys():

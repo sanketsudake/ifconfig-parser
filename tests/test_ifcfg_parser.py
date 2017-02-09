@@ -72,6 +72,9 @@ class IfcfgTestCase3(unittest.TestCase):
 
     def test_get(self):
         _ifparser = self.ifparser
+        self.assertNotEqual(_ifparser.get(interface='lo'), [])
+        self.assertNotEqual(_ifparser.get(interface='docker0'), [])
+        self.assertNotEqual(_ifparser.get(interface='eth0'), [])
         self.assertEqual(
             [
                 _ifparser.get(interface='lo')[0],
