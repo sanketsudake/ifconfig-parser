@@ -130,7 +130,7 @@ class Ifcfg(object):
 
     @property
     def interfaces(self):
-        return self._interfaces.keys()
+        return sorted(self._interfaces.keys())
 
     def get_interface(self, interface):
         return self._interfaces[interface]

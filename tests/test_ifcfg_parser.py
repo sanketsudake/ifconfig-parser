@@ -68,7 +68,7 @@ class IfcfgTestCase3(unittest.TestCase):
     def test_interfaces(self):
         _ifparser = self.ifparser
         self.assertEqual(len(_ifparser.interfaces), 3)
-        self.assertEqual(_ifparser.interfaces, ['lo', 'docker0', 'eth0'])
+        self.assertEqual(_ifparser.interfaces, ['docker0', 'eth0', 'lo'])
 
     def test_get(self):
         _ifparser = self.ifparser
@@ -94,4 +94,4 @@ class IfcfgTestCaseDynamic(unittest.TestCase):
     def test_interfaces(self):
         _ifparser = self.ifparser
         self.assertEqual(len(_ifparser.interfaces), 3)
-        self.assertEqual(_ifparser.interfaces, ['lo', 'wlan0', 'eth0'])
+        self.assertEqual(_ifparser.interfaces, ['eth0', 'lo', 'wlan0'])
