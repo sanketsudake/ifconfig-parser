@@ -32,6 +32,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 from __future__ import unicode_literals, print_function
+import sys
 from sre_compile import compile as sre_compile
 from sre_constants import BRANCH, SUBPATTERN
 from sre_parse import Pattern, SubPattern, parse
@@ -98,7 +99,8 @@ class Scanner(object):
     def __init__(self, rules, flags=0):
         pattern = Pattern()
         pattern.flags = flags
-        pattern.groups = len(rules) + 1
+        if sys.version_info < (3, 0):
+            pattern.groups = len(rules) + 1
         _og = pattern.opengroup
         pattern.opengroup = lambda n: _og(n and '%s\x00%s' % (name, n) or n)
 
