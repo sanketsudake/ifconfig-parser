@@ -7,8 +7,10 @@ class Interface(object):
         'interface', 'itype', 'mtu', 'ip', 'bcast', 'mask', 'hwaddr',
         'txbytes', 'rxbytes', 'rxpkts', 'txpkts'
     ])
-    _flags = frozenset(
-        ['BROADCAST', 'MULTICAST', 'UP', 'RUNNING', 'LOOPBACK', 'DYNAMIC', 'PROMISC', 'NOARP'])
+    _flags = frozenset([
+        'BROADCAST', 'MULTICAST', 'UP', 'RUNNING', 'LOOPBACK', 'DYNAMIC',
+        'PROMISC', 'NOARP'
+    ])
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
@@ -139,8 +141,8 @@ class Ifcfg(object):
     def get_interface(self, interface):
         if interface in self._interfaces:
             return self._interfaces[interface]
-        raise InterfaceNotFound("No such interface {0} found.".format(
-            interface))
+        raise InterfaceNotFound(
+            "No such interface {0} found.".format(interface))
 
     def get(self, **kwargs):
         for key in kwargs.keys():
