@@ -8,7 +8,7 @@ class Interface(object):
         'txbytes', 'rxbytes', 'rxpkts', 'txpkts'
     ])
     _flags = frozenset(
-        ['BROADCAST', 'MULTICAST', 'UP', 'RUNNING', 'LOOPBACK', 'DYNAMIC'])
+        ['BROADCAST', 'MULTICAST', 'UP', 'RUNNING', 'LOOPBACK', 'DYNAMIC', 'PROMISC'])
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
