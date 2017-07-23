@@ -48,8 +48,8 @@ with open('README.rst') as f:
 setup(
     name='ifparser',
     version=version,
-    url='http://github.com/tripples/ifconfig-parser',
-    download_url='http://github.com/tripples/ifconfig-parser',
+    url='http://github.com/ssudake21/ifconfig-parser',
+    download_url='http://github.com/ssudake21/ifconfig-parser',
     license='BSD',
     description='Parse ifconfig output and retrieve values with goodies',
     long_description=long_description,
