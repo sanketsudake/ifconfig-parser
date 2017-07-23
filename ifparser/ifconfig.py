@@ -5,11 +5,12 @@ from .re_scan import ScanEnd, Scanner
 class Interface(object):
     _attrs = frozenset([
         'interface', 'itype', 'mtu', 'ip', 'bcast', 'mask', 'hwaddr',
-        'txbytes', 'rxbytes', 'rxpkts', 'txpkts','rxdroppedpkts','rxoverruns','rxframe','rxerrors'
+        'txbytes', 'rxbytes', 'rxpkts', 'txpkts', 'rxdroppedpkts',
+        'rxoverruns', 'rxframe', 'rxerrors'
     ])
     _flags = frozenset([
         'BROADCAST', 'MULTICAST', 'UP', 'RUNNING', 'LOOPBACK', 'DYNAMIC',
-        'PROMISC', 'NOARP','POINTOPOINT','SIMPLEX','SMART','MASTER'
+        'PROMISC', 'NOARP', 'POINTOPOINT', 'SIMPLEX', 'SMART', 'MASTER'
     ])
 
     def __init__(self, **kwargs):
@@ -66,7 +67,11 @@ class Ifcfg(object):
         ('process_mtu', r"\s+(?P<states>[A-Z\s]+\s*)+MTU:(?P<mtu>[0-9]+).*"),
         ('process_any', r"\s+RX bytes:(?P<rxbytes>\d+).*?"
          "TX bytes:(?P<txbytes>\d+).*"),
-        ('process_any', "\s+RX packets[:\s](?P<rxpkts>\d+)\s*errors[:\s](?P<rxerrors>\d+)\s*dropped[:\s](?P<rxdroppedpkts>\d+)\s*overruns[:\s](?P<rxoverruns>\d+)\s*frame[:\s](?P<rxframe>\d+).*"),
+        ('process_any',
+         "\s+RX packets[:\s](?P<rxpkts>\d+)\s*errors[:\s](?P<rxerrors>\d+)"
+         "\s*dropped[:\s](?P<rxdroppedpkts>\d+)\s*overruns[:\s]"
+         "(?P<rxoverruns>\d+)\s*frame[:\s](?P<rxframe>\d+).*"
+         ),
         ('process_any', r"\s+TX packets[:\s](?P<txpkts>\d+).*"),
         ('process_interface2',
          r"(?P<interface>^[a-zA-Z0-9-]+).*?<(?P<states>[A-Z,]+\s*)>"

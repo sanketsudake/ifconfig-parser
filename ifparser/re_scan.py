@@ -109,8 +109,9 @@ class Scanner(object):
         for group, (name, regex) in enumerate(rules, 1):
             last_group = pattern.groups - 1
             subpatterns.append(
-                SubPattern(pattern, [(SUBPATTERN, (group, parse(regex, flags,
-                                                                pattern))), ]))
+                SubPattern(pattern, [
+                    (SUBPATTERN, (group, parse(regex, flags, pattern))),
+                ]))
             self.rules.append((name, last_group, pattern.groups - 1))
         self._scanner = sre_compile(
             SubPattern(pattern, [(BRANCH, (None, subpatterns))])).scanner

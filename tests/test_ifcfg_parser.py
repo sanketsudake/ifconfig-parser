@@ -75,13 +75,14 @@ class IfcfgTestCase3(unittest.TestCase):
         self.assertNotEqual(_ifparser.get(interface='lo'), [])
         self.assertNotEqual(_ifparser.get(interface='docker0'), [])
         self.assertNotEqual(_ifparser.get(interface='eth0'), [])
+        print(_ifparser.get(UP=True))
         self.assertEqual(
             [
                 _ifparser.get(interface='lo')[0],
                 _ifparser.get(interface='docker0')[0],
                 _ifparser.get(interface='eth0')[0]
             ],
-            _ifparser.get(UP=True))
+            sorted(_ifparser.get(UP=True)))
         self.assertEqual(
             _ifparser.get(interface='eth0'),
             _ifparser.get(hwaddr='08:00:27:1f:d8:b0'))
