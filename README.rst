@@ -1,6 +1,9 @@
 ifconfig-parser
 ################
 
+.. image:: https://travis-ci.org/ssudake21/ifconfig-parser.svg?branch=master
+    :target: https://travis-ci.org/ssudake21/ifconfig-parser
+
 Parse ifconfig output collected from local or remote server and retrieve required
 interface information.
 
