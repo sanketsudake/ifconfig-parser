@@ -99,3 +99,16 @@ class IfcfgTestCaseDynamic(unittest.TestCase):
         _ifparser = self.ifparser
         self.assertEqual(len(_ifparser.interfaces), 3)
         self.assertEqual(_ifparser.interfaces, ['eth0', 'lo', 'wlan0'])
+
+
+class IfcfgTestCase5(unittest.TestCase):
+    def setUp(self):
+        fp = open('tests/iftest_5.txt', 'r')
+        data = fp.read()
+        fp.close()
+        self.ifparser = Ifcfg(data, debug=True)
+
+    def test_interfaces(self):
+        _ifparser = self.ifparser
+        self.assertEqual(len(_ifparser.interfaces), 8)
+        self.assertEqual(_ifparser.interfaces, ['gre0', 'ip6tnl0', 'lo', 'rmnetctl', 'sit0', 'eth1.60', 'eth1.60:1', 'port_100_br0_l'])
