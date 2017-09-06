@@ -3,15 +3,24 @@ from .re_scan import ScanEnd, Scanner
 
 
 class Interface(object):
-    _attrs = frozenset([
-        'interface', 'itype', 'mtu', 'ip', 'bcast', 'mask', 'hwaddr',
-        'txbytes', 'rxbytes', 'rxpkts', 'txpkts', 'rxdroppedpkts',
-        'rxoverruns', 'rxframe', 'rxerrors'
-    ])
-    _flags = frozenset([
+    _attrList = [
+        'interface', 'itype', 'mtu', 'ip', 'bcast', 'mask', 'hwaddr'
+    ]
+    _cntFieldList = [
+        'txbytes', 'rxbytes', 'rxpkts', 'txpkts',
+        'txerrors', 'rxerrors', 'txdroppedpkts', 'rxdroppedpkts',
+        'txoverruns', 'rxoverruns', 'txcarrier', 'rxframe'
+    ]
+    _flagList = [
         'BROADCAST', 'MULTICAST', 'UP', 'RUNNING', 'LOOPBACK', 'DYNAMIC',
         'PROMISC', 'NOARP', 'POINTOPOINT', 'SIMPLEX', 'SMART', 'MASTER'
-    ])
+    ]
+
+    _attrs     = frozenset(_attrList)
+    _cntFields = frozenset (_cntFieldList)
+    _flags     = frozenset(_flagList)
+    _nonFlags  = _attrs.union (_cntFields)
+    _allFields = _nonFlags.union (_flags)
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
@@ -21,13 +30,13 @@ class Interface(object):
         """
         Return False if flag not set
         """
-        if name in Interface._attrs:
+        if name in Interface._nonFlags:
             return None
         if name in Interface._flags:
             return False
 
     def __setattr__(self, name, value):
-        if name in Interface._attrs or name in Interface._flags:
+        if name in Interface._allFields:
             if value:
                 super(Interface, self).__setattr__(name, value)
         else:
@@ -42,9 +51,7 @@ class Interface(object):
 
     def get_values(self):
         value_dict = {}
-        for attr in Interface._attrs:
-            value_dict[attr] = getattr(self, attr)
-        for attr in Interface._flags:
+        for attr in Interface._allFields:
             value_dict[attr] = getattr(self, attr)
         return value_dict
 
@@ -59,20 +66,29 @@ class InterfaceNotFound(Exception):
 
 class Ifcfg(object):
     scanner = Scanner([
-        ('process_interface', r"(?P<interface>^[a-zA-Z0-9:-]+)\s+"
-         "Link encap\:(?P<itype>[A-Za-z]+)\s+"
-         "((?:Loopback)|(?:HWaddr\s(?P<hwaddr>[0-9A-Fa-f:]+))).*"),
+        ('process_interface',
+          r"(?P<interface>^[a-zA-Z0-9:._-]+)\s+"
+          "Link encap\:(?P<itype>[A-Za-z0-9-]+(?: [A-Za-z0-9-]+)*)\s*"
+          "(?:HWaddr(?:\s(?P<hwaddr>[0-9A-Fa-f:-]*)))?.*"),
         ('process_any', r"\s+ether\s(?P<hwaddr>[0-9A-Fa-f:]+).*"),
         ('process_ip', r"\s+inet[\s:].*"),
         ('process_mtu', r"\s+(?P<states>[A-Z\s]+\s*)+MTU:(?P<mtu>[0-9]+).*"),
         ('process_any', r"\s+RX bytes:(?P<rxbytes>\d+).*?"
          "TX bytes:(?P<txbytes>\d+).*"),
         ('process_any',
-         "\s+RX packets[:\s](?P<rxpkts>\d+)\s*errors[:\s](?P<rxerrors>\d+)"
-         "\s*dropped[:\s](?P<rxdroppedpkts>\d+)\s*overruns[:\s]"
-         "(?P<rxoverruns>\d+)\s*frame[:\s](?P<rxframe>\d+).*"
-         ),
-        ('process_any', r"\s+TX packets[:\s](?P<txpkts>\d+).*"),
+         r"\s+RX packets[:\s](?P<rxpkts>\d+)"
+         "\s+errors[:\s](?P<rxerrors>\d+)"
+         "\s+dropped[:\s](?P<rxdroppedpkts>\d+)"
+         "\s+overruns[:\s](?P<rxoverruns>\d+)"
+         "\s+frame[:\s](?P<rxframe>\d+)"
+         ".*"),
+        ('process_any',
+         r"\s+TX packets[:\s](?P<txpkts>\d+)"
+         "\s+errors[:\s](?P<txerrors>\d+)"
+         "\s+dropped[:\s](?P<txdroppedpkts>\d+)"
+         "\s+overruns[:\s](?P<txoverruns>\d+)"
+         "\s+carrier[:\s](?P<txcarrier>\d+)"
+         ".*"),
         ('process_interface2',
          r"(?P<interface>^[a-zA-Z0-9-]+).*?<(?P<states>[A-Z,]+\s*)>"
          ".*?mtu (?P<mtu>[0-9]+).*"),
@@ -84,10 +100,11 @@ class Ifcfg(object):
         self.debug = debug
         self._interfaces = {}
         self.curr_interface = None
-        self._process(raw_text)
+        lines = raw_text if isinstance (raw_text, list) else raw_text.splitlines ()
+        self._process(lines)
 
-    def _process(self, raw_text):
-        for line in raw_text.splitlines():
+    def _process(self, lines):
+        for line in lines:
             try:
                 for token, match in Ifcfg.scanner.scan(line):
                     process_func = getattr(self, token)
@@ -151,7 +168,7 @@ class Ifcfg(object):
 
     def get(self, **kwargs):
         for key in kwargs.keys():
-            key_check = key in Interface._attrs or key in Interface._flags
+            key_check = key in Interface._allFields
             if not key_check:
                 raise ValueError("Invalid argument: %s" % key)
         eligible = []
