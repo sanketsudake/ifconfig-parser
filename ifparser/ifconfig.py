@@ -115,7 +115,8 @@ class Ifcfg(object):
 
     def set_curr_interface_attr(self, kwargs):
         for k, v in kwargs.items():
-            setattr(self._interfaces[self.curr_interface], k, v)
+            if v is not None:
+                setattr(self._interfaces[self.curr_interface], k, v)
 
     def process_interface(self, group, groupdict, matched_str):
         self.curr_interface = groupdict['interface']
