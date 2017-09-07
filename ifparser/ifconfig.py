@@ -37,7 +37,7 @@ class Interface(object):
 
     def __setattr__(self, name, value):
         if name in Interface._allFields:
-            if value:
+            if value is not None:
                 super(Interface, self).__setattr__(name, value)
         else:
             raise ValueError("Invalid attribute mentioned name=%s value=%s" %
