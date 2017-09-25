@@ -100,8 +100,8 @@ class Ifcfg(object):
         self.debug = debug
         self._interfaces = {}
         self.curr_interface = None
-        lines = raw_text if isinstance(raw_text, list) \
-                else raw_text.splitlines()
+        lines = raw_text if isinstance(raw_text, list) else \
+            raw_text.splitlines()
         self._process(lines)
 
     def _process(self, lines):
