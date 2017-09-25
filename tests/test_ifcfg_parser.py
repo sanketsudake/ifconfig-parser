@@ -111,4 +111,4 @@ class IfcfgTestCase5(unittest.TestCase):
     def test_interfaces(self):
         _ifparser = self.ifparser
         self.assertEqual(len(_ifparser.interfaces), 8)
-        self.assertEqual(_ifparser.interfaces, ['gre0', 'ip6tnl0', 'lo', 'rmnetctl', 'sit0', 'eth1.60', 'eth1.60:1', 'port_100_br0_l'])
+        self.assertEqual(_ifparser.interfaces, ['eth1.60', 'eth1.60:1', 'gre0', 'ip6tnl0', 'lo', 'port_100_br0_l', 'rmnetctl', 'sit0'])
