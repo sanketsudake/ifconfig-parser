@@ -16,11 +16,11 @@ class Interface(object):
         'PROMISC', 'NOARP', 'POINTOPOINT', 'SIMPLEX', 'SMART', 'MASTER'
     ]
 
-    _attrs     = frozenset(_attrList)
-    _cntFields = frozenset (_cntFieldList)
-    _flags     = frozenset(_flagList)
-    _nonFlags  = _attrs.union (_cntFields)
-    _allFields = _nonFlags.union (_flags)
+    _attrs = frozenset(_attrList)
+    _cntFields = frozenset(_cntFieldList)
+    _flags = frozenset(_flagList)
+    _nonFlags = _attrs.union(_cntFields)
+    _allFields = _nonFlags.union(_flags)
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
@@ -67,9 +67,9 @@ class InterfaceNotFound(Exception):
 class Ifcfg(object):
     scanner = Scanner([
         ('process_interface',
-          r"(?P<interface>^[a-zA-Z0-9:._-]+)\s+"
-          "Link encap\:(?P<itype>[A-Za-z0-9-]+(?: [A-Za-z0-9-]+)*)\s*"
-          "(?:HWaddr(?:\s(?P<hwaddr>[0-9A-Fa-f:-]*)))?.*"),
+         r"(?P<interface>^[a-zA-Z0-9:._-]+)\s+"
+         "Link encap\:(?P<itype>[A-Za-z0-9-]+(?: [A-Za-z0-9-]+)*)\s*"
+         "(?:HWaddr(?:\s(?P<hwaddr>[0-9A-Fa-f:-]*)))?.*"),
         ('process_any', r"\s+ether\s(?P<hwaddr>[0-9A-Fa-f:]+).*"),
         ('process_ip', r"\s+inet[\s:].*"),
         ('process_mtu', r"\s+(?P<states>[A-Z\s]+\s*)+MTU:(?P<mtu>[0-9]+).*"),
@@ -100,7 +100,7 @@ class Ifcfg(object):
         self.debug = debug
         self._interfaces = {}
         self.curr_interface = None
-        lines = raw_text if isinstance (raw_text, list) else raw_text.splitlines ()
+        lines = raw_text if isinstance(raw_text, list) else raw_text.splitlines()
         self._process(lines)
 
     def _process(self, lines):
