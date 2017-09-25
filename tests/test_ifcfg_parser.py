@@ -78,9 +78,9 @@ class IfcfgTestCase3(unittest.TestCase):
         print(_ifparser.get(UP=True))
         self.assertEqual(
             [
-                _ifparser.get(interface='lo')[0],
+                _ifparser.get(interface='eth0')[0],
                 _ifparser.get(interface='docker0')[0],
-                _ifparser.get(interface='eth0')[0]
+                _ifparser.get(interface='lo')[0]
             ],
             sorted(_ifparser.get(UP=True)))
         self.assertEqual(
@@ -111,4 +111,6 @@ class IfcfgTestCase5(unittest.TestCase):
     def test_interfaces(self):
         _ifparser = self.ifparser
         self.assertEqual(len(_ifparser.interfaces), 8)
-        self.assertEqual(_ifparser.interfaces, ['eth1.60', 'eth1.60:1', 'gre0', 'ip6tnl0', 'lo', 'port_100_br0_l', 'rmnetctl', 'sit0'])
+        self.assertEqual(_ifparser.interfaces,
+                         ['eth1.60', 'eth1.60:1', 'gre0', 'ip6tnl0', 'lo',
+                          'port_100_br0_l', 'rmnetctl', 'sit0'])
