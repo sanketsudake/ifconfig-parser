@@ -3,24 +3,24 @@ from .re_scan import ScanEnd, Scanner
 
 
 class Interface(object):
-    _attrList = [
+    _attr_list = (
         'interface', 'itype', 'mtu', 'ip', 'bcast', 'mask', 'hwaddr'
-    ]
-    _cntFieldList = [
+    )
+    _cnt_field_list = (
         'txbytes', 'rxbytes', 'rxpkts', 'txpkts',
         'txerrors', 'rxerrors', 'txdroppedpkts', 'rxdroppedpkts',
         'txoverruns', 'rxoverruns', 'txcarrier', 'rxframe'
-    ]
-    _flagList = [
+    )
+    _flag_list = (
         'BROADCAST', 'MULTICAST', 'UP', 'RUNNING', 'LOOPBACK', 'DYNAMIC',
         'PROMISC', 'NOARP', 'POINTOPOINT', 'SIMPLEX', 'SMART', 'MASTER'
-    ]
+    )
 
-    _attrs = frozenset(_attrList)
-    _cntFields = frozenset(_cntFieldList)
-    _flags = frozenset(_flagList)
-    _nonFlags = _attrs.union(_cntFields)
-    _allFields = _nonFlags.union(_flags)
+    _attrs = frozenset(_attr_list)
+    _cnt_fields = frozenset(_cnt_field_list)
+    _flags = frozenset(_flag_list)
+    _non_flags = _attrs.union(_cnt_fields)
+    _all_fields = _non_flags.union(_flags)
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
@@ -30,13 +30,13 @@ class Interface(object):
         """
         Return False if flag not set
         """
-        if name in Interface._nonFlags:
+        if name in Interface._non_flags:
             return None
         if name in Interface._flags:
             return False
 
     def __setattr__(self, name, value):
-        if name in Interface._allFields:
+        if name in Interface._all_fields:
             if value is not None:
                 super(Interface, self).__setattr__(name, value)
         else:
@@ -51,7 +51,7 @@ class Interface(object):
 
     def get_values(self):
         value_dict = {}
-        for attr in Interface._allFields:
+        for attr in Interface._all_fields:
             value_dict[attr] = getattr(self, attr)
         return value_dict
 
@@ -170,7 +170,7 @@ class Ifcfg(object):
 
     def get(self, **kwargs):
         for key in kwargs.keys():
-            key_check = key in Interface._allFields
+            key_check = key in Interface._all_fields
             if not key_check:
                 raise ValueError("Invalid argument: %s" % key)
         eligible = []
