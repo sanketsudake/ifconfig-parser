@@ -1,0 +1,6 @@
+enp135s0f0 Link encap:Ethernet  HWaddr 3c:fd:fe:b9:2f:10
+          UP BROADCAST RUNNING SLAVE MULTICAST  MTU:9100  Metric:1
+          RX packets:83506277 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:40450344 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:47759052436 (47.7 GB)  TX bytes:21148910170 (21.1 GB)

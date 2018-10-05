@@ -13,7 +13,8 @@ class Interface(object):
     )
     _flag_list = (
         'BROADCAST', 'MULTICAST', 'UP', 'RUNNING', 'LOOPBACK', 'DYNAMIC',
-        'PROMISC', 'NOARP', 'POINTOPOINT', 'SIMPLEX', 'SMART', 'MASTER'
+        'PROMISC', 'NOARP', 'POINTOPOINT', 'SIMPLEX', 'SMART', 'MASTER',
+        'SLAVE'
     )
 
     _attrs = frozenset(_attr_list)
