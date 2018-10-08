@@ -114,3 +114,20 @@ class IfcfgTestCase5(unittest.TestCase):
         self.assertEqual(_ifparser.interfaces,
                          ['eth1.60', 'eth1.60:1', 'gre0', 'ip6tnl0', 'lo',
                           'port_100_br0_l', 'rmnetctl', 'sit0'])
+
+
+class IfcfgTestCase6(unittest.TestCase):
+    def setUp(self):
+        fp = open('tests/iftest_6.txt', 'r')
+        data = fp.read()
+        fp.close()
+        self.ifparser = Ifcfg(data, debug=True)
+
+    def test_interface_slave_value(self):
+        _ifparser = self.ifparser
+        self.assertEqual(len(_ifparser.interfaces), 1)
+        self.assertEqual(_ifparser.interfaces,
+                         ['enp135s0f0'])
+        interface = _ifparser.get_interface('enp135s0f0')
+        values = interface.get_values()
+        self.assertEqual(True, values['SLAVE'])
