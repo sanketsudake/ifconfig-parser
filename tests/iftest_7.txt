@@ -1,0 +1,7 @@
+vpn0 Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  
+          inet addr:10.0.0.2  P-t-P:10.0.0.2  Mask:255.255.255.0
+          UP POINTOPOINT RUNNING NOARP MULTICAST  MTU:1500  Metric:1
+          RX packets:4 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:10000 
+          RX bytes:304 (304.0 B)  TX bytes:0 (0.0 B)

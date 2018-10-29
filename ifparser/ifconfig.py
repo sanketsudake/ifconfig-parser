@@ -4,7 +4,7 @@ from .re_scan import ScanEnd, Scanner
 
 class Interface(object):
     _attr_list = (
-        'interface', 'itype', 'mtu', 'ip', 'bcast', 'mask', 'hwaddr'
+        'interface', 'itype', 'mtu', 'ip', 'bcast', 'mask', 'hwaddr', 'ptp'
     )
     _cnt_field_list = (
         'txbytes', 'rxbytes', 'rxpkts', 'txpkts',
@@ -135,8 +135,12 @@ class Ifcfg(object):
 
     def process_ip(self, group, groupdict, matched_str):
         if ':' in matched_str:
-            for attr in matched_str.strip().lower().replace('inet addr',
-                                                            'ip').split():
+            splitattrs = matched_str.strip() \
+                         .lower() \
+                         .replace('inet addr', 'ip') \
+                         .replace('p-t-p', 'ptp') \
+                         .split()
+            for attr in splitattrs:
                 name, value = attr.split(':')
                 setattr(self._interfaces[self.curr_interface], name, value)
         else:
