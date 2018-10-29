@@ -78,8 +78,8 @@ class IfcfgTestCase3(unittest.TestCase):
         print(_ifparser.get(UP=True))
         self.assertEqual(
             [
-                _ifparser.get(interface='docker0')[0],
                 _ifparser.get(interface='eth0')[0],
+                _ifparser.get(interface='docker0')[0],
                 _ifparser.get(interface='lo')[0]
             ],
             sorted(_ifparser.get(UP=True)))
