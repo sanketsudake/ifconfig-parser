@@ -65,7 +65,7 @@ Get all interface parameters with ``get_values``. Following dictionary contains 
 
 List of parameters for interface:
 
-- BROADCAST, LOOPBACK, MULTICAST, RUNNING, UP, DYNAMIC, NOARP, PROMISC, POINTTOPOINT, SIMPLEX, SMART, MASTER, SLAVE
+- BROADCAST, LOOPBACK, MULTICAST, RUNNING, UP, DYNAMIC, NOARP, PROMISC, POINTOPOINT, SIMPLEX, SMART, MASTER, SLAVE
 - interface - Interface name, itype - Interface Type
 - ip - IP, bcast - Broadcast, mask - Mask
 - hwaddr - MAC address, mtu - MTU

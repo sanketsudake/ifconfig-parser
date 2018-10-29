@@ -135,11 +135,11 @@ class Ifcfg(object):
 
     def process_ip(self, group, groupdict, matched_str):
         if ':' in matched_str:
-            splitattrs = matched_str.strip() \
-                         .lower() \
-                         .replace('inet addr', 'ip') \
-                         .replace('p-t-p', 'ptp') \
-                         .split()
+            splitattrs = (matched_str.strip()
+                          .lower()
+                          .replace('inet addr', 'ip')
+                          .replace('p-t-p', 'ptp')
+                          .split())
             for attr in splitattrs:
                 name, value = attr.split(':')
                 setattr(self._interfaces[self.curr_interface], name, value)
