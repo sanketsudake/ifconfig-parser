@@ -4,7 +4,7 @@ from .re_scan import ScanEnd, Scanner
 
 class Interface(object):
     _attr_list = (
-        'interface', 'itype', 'mtu', 'ip', 'bcast', 'mask', 'hwaddr'
+        'interface', 'itype', 'mtu', 'ip', 'bcast', 'mask', 'hwaddr', 'ptp'
     )
     _cnt_field_list = (
         'txbytes', 'rxbytes', 'rxpkts', 'txpkts',
@@ -69,30 +69,30 @@ class Ifcfg(object):
     scanner = Scanner([
         ('process_interface',
          r"(?P<interface>^[a-zA-Z0-9:._-]+)\s+"
-         "Link encap\:(?P<itype>[A-Za-z0-9-]+(?: [A-Za-z0-9-]+)*)\s*"
-         "(?:HWaddr(?:\s(?P<hwaddr>[0-9A-Fa-f:-]*)))?.*"),
+         r"Link encap\:(?P<itype>[A-Za-z0-9-]+(?: [A-Za-z0-9-]+)*)\s*"
+         r"(?:HWaddr(?:\s(?P<hwaddr>[0-9A-Fa-f:-]*)))?.*"),
         ('process_any', r"\s+ether\s(?P<hwaddr>[0-9A-Fa-f:]+).*"),
         ('process_ip', r"\s+inet[\s:].*"),
         ('process_mtu', r"\s+(?P<states>[A-Z\s]+\s*)+MTU:(?P<mtu>[0-9]+).*"),
         ('process_any', r"\s+RX bytes:(?P<rxbytes>\d+).*?"
-         "TX bytes:(?P<txbytes>\d+).*"),
+         r"TX bytes:(?P<txbytes>\d+).*"),
         ('process_any',
          r"\s+RX packets[:\s](?P<rxpkts>\d+)"
-         "\s+errors[:\s](?P<rxerrors>\d+)"
-         "\s+dropped[:\s](?P<rxdroppedpkts>\d+)"
-         "\s+overruns[:\s](?P<rxoverruns>\d+)"
-         "\s+frame[:\s](?P<rxframe>\d+)"
+         r"\s+errors[:\s](?P<rxerrors>\d+)"
+         r"\s+dropped[:\s](?P<rxdroppedpkts>\d+)"
+         r"\s+overruns[:\s](?P<rxoverruns>\d+)"
+         r"\s+frame[:\s](?P<rxframe>\d+)"
          ".*"),
         ('process_any',
          r"\s+TX packets[:\s](?P<txpkts>\d+)"
-         "\s+errors[:\s](?P<txerrors>\d+)"
-         "\s+dropped[:\s](?P<txdroppedpkts>\d+)"
-         "\s+overruns[:\s](?P<txoverruns>\d+)"
-         "\s+carrier[:\s](?P<txcarrier>\d+)"
-         ".*"),
+         r"\s+errors[:\s](?P<txerrors>\d+)"
+         r"\s+dropped[:\s](?P<txdroppedpkts>\d+)"
+         r"\s+overruns[:\s](?P<txoverruns>\d+)"
+         r"\s+carrier[:\s](?P<txcarrier>\d+)"
+         r".*"),
         ('process_interface2',
          r"(?P<interface>^[a-zA-Z0-9-]+).*?<(?P<states>[A-Z,]+\s*)>"
-         ".*?mtu (?P<mtu>[0-9]+).*"),
+         r".*?mtu (?P<mtu>[0-9]+).*"),
         ('process_ignore', r"(Ifconfig|Infiniband|Because)\s.*"),
         ('process_ignore', r"\s+.*"),
     ])
@@ -135,8 +135,12 @@ class Ifcfg(object):
 
     def process_ip(self, group, groupdict, matched_str):
         if ':' in matched_str:
-            for attr in matched_str.strip().lower().replace('inet addr',
-                                                            'ip').split():
+            splitattrs = (matched_str.strip()
+                          .lower()
+                          .replace('inet addr', 'ip')
+                          .replace('p-t-p', 'ptp')
+                          .split())
+            for attr in splitattrs:
                 name, value = attr.split(':')
                 setattr(self._interfaces[self.curr_interface], name, value)
         else:

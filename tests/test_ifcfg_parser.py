@@ -126,8 +126,30 @@ class IfcfgTestCase6(unittest.TestCase):
     def test_interface_slave_value(self):
         _ifparser = self.ifparser
         self.assertEqual(len(_ifparser.interfaces), 1)
-        self.assertEqual(_ifparser.interfaces,
-                         ['enp135s0f0'])
+        self.assertEqual(_ifparser.interfaces, ['enp135s0f0'])
         interface = _ifparser.get_interface('enp135s0f0')
         values = interface.get_values()
         self.assertEqual(True, values['SLAVE'])
+
+
+class IfcfgTestCase7(unittest.TestCase):
+    def setUp(self):
+        fp = open('tests/iftest_7.txt', 'r')
+        data = fp.read()
+        fp.close()
+        self.ifparser = Ifcfg(data, debug=True)
+
+    def test_interface_slave_value(self):
+        _ifparser = self.ifparser
+        self.assertEqual(len(_ifparser.interfaces), 1)
+        self.assertEqual(_ifparser.interfaces, ['vpn0'])
+        interface = _ifparser.get_interface('vpn0')
+        self.assertEqual(interface.POINTOPOINT, True)
+        self.assertEqual(interface.ptp, '10.0.0.2')
+        self.assertEqual(interface.ip, '10.0.0.2')
+        self.assertEqual(interface.txpkts, '7')
+        self.assertEqual(interface.rxpkts, '4')
+        self.assertEqual(interface.txbytes, '309')
+        self.assertEqual(interface.rxbytes, '304')
+        values = interface.get_values()
+        self.assertEqual(True, values['POINTOPOINT'])
